@@ -1,0 +1,27 @@
+class Solution{
+public:
+    int goldCollected(int n,int m,vector<vector<int>> &dp,vector<vector<int>> &M,int i,int j){
+        if(i<0 || j<0 || i>=n || j>=m){
+            return 0;
+        }
+        if(dp[i][j]!=-1){
+            return dp[i][j];
+        }
+        int a= goldCollected(n,m,dp,M,i-1,j+1);
+        int b=goldCollected(n,m,dp,M,i,j+1);
+        int c=goldCollected(n,m,dp,M,i+1,j+1);
+        dp[i][j]=M[i][j] +max(a,max(b,c));
+        return  dp[i][j];
+    }
+    int maxGold(int n, int m, vector<vector<int>> M)
+    {   
+        int mx = -1;
+        vector<vector<int>> dp(n,vector<int>(m,-1));
+      
+        for(int i=0;i<n;i++){
+            mx = max(mx,goldCollected(n,m,dp,M,i,0));
+        }
+        return mx;
+    }
+
+};
